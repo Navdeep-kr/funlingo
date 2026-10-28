@@ -1,0 +1,25 @@
+{
+  "name": "SpeakQuest - Joyful Spoken English",
+  "short_name": "SpeakQuest",
+  "description": "Master spoken English and pronunciation with Zippy, live branching roleplays, phoneme coaching, and career mode.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFDF8",
+  "theme_color": "#845EC2",
+  "icons": [
+    {
+      "src": "icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

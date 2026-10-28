@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#845EC2" />
+      <stop offset="100%" stop-color="#5C3A93" />
+    </linearGradient>
+    <linearGradient id="body" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFD152" />
+      <stop offset="100%" stop-color="#FFA502" />
+    </linearGradient>
+    <linearGradient id="belly" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF9E6" />
+      <stop offset="100%" stop-color="#FFEBB3" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="rgba(0,0,0,0.28)" />
+    </filter>
+  </defs>
+
+  <!-- Background with rounded corners -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+
+  <!-- Joy Sparkles -->
+  <path d="M112 108 L117 88 L122 108 L142 113 L122 118 L117 138 L112 118 L92 113 Z" fill="#FFC93C" opacity="0.9" />
+  <path d="M400 128 L403 112 L406 128 L422 131 L406 134 L403 150 L400 134 L384 131 Z" fill="#38B6FF" opacity="0.9" />
+  <path d="M380 374 L385 358 L390 374 L406 379 L390 384 L385 400 L380 384 L364 379 Z" fill="#20BF6B" opacity="0.9" />
+
+  <!-- Zippy Head Tufts -->
+  <path d="M256 140 C242 112 226 120 235 150 C256 134 264 118 256 140 Z" fill="#FFA502" />
+  <path d="M256 140 C270 112 286 120 277 150 C256 134 248 118 256 140 Z" fill="#FFA502" />
+
+  <!-- Zippy Body -->
+  <ellipse cx="256" cy="278" rx="128" ry="122" fill="url(#body)" filter="url(#shadow)" />
+  <ellipse cx="256" cy="304" rx="90" ry="74" fill="url(#belly)" />
+
+  <!-- Rosy Cheeks -->
+  <ellipse cx="186" cy="282" rx="24" ry="16" fill="#FF6B8B" opacity="0.65" />
+  <ellipse cx="326" cy="282" rx="24" ry="16" fill="#FF6B8B" opacity="0.65" />
+
+  <!-- Eyes -->
+  <ellipse cx="214" cy="250" rx="20" ry="25" fill="#232733" />
+  <circle cx="207" cy="242" r="8" fill="#FFFFFF" />
+  <circle cx="219" cy="256" r="4" fill="#FFFFFF" />
+
+  <ellipse cx="298" cy="250" rx="20" ry="25" fill="#232733" />
+  <circle cx="291" cy="242" r="8" fill="#FFFFFF" />
+  <circle cx="303" cy="256" r="4" fill="#FFFFFF" />
+
+  <!-- Beak -->
+  <path d="M240 262 Q256 288 272 262 Q256 254 240 262 Z" fill="#FF6B35" />
+
+  <!-- Feet -->
+  <path d="M224 394 L214 416 M224 394 L224 418 M224 394 L234 416" stroke="#FF6B35" stroke-width="9" stroke-linecap="round" />
+  <path d="M288 394 L278 416 M288 394 L288 418 M288 394 L298 416" stroke="#FF6B35" stroke-width="9" stroke-linecap="round" />
+</svg>
