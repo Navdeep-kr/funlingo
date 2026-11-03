@@ -2153,6 +2153,137 @@
       max-width: 90%;
     }
 
+    /* ==========================================================================
+       REAL-TIME PRONUNCIATION KARAOKE & PHONEME HEATMAP
+       ========================================================================== */
+    .speak-karaoke-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .karaoke-phrase-box {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px 10px;
+      padding: 12px 16px;
+      background: var(--bg-surface-soft);
+      border: 2px dashed var(--border-subtle);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 64px;
+      transition: all 0.2s ease;
+    }
+
+    .karaoke-word-chip {
+      appearance: none;
+      border: 2px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: clamp(1.05rem, 3.2vw, 1.35rem);
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 0 var(--shadow-3d-base);
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+      position: relative;
+      user-select: none;
+      outline: none;
+    }
+
+    .karaoke-word-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 0 var(--shadow-3d-base);
+      border-color: var(--color-purple);
+    }
+
+    .karaoke-word-chip:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 var(--shadow-3d-base);
+    }
+
+    .karaoke-word-chip .speaker-sub-icon {
+      font-size: 0.72rem;
+      opacity: 0.6;
+      transition: opacity 0.15s ease;
+    }
+
+    .karaoke-word-chip:hover .speaker-sub-icon {
+      opacity: 1;
+    }
+
+    /* Live Karaoke Streaming States */
+    .karaoke-word-chip.state-speaking {
+      border-color: var(--color-sky) !important;
+      background: #E0F2FE !important;
+      color: #0369A1 !important;
+      transform: scale(1.08) translateY(-3px);
+      box-shadow: 0 6px 14px rgba(14, 165, 233, 0.25) !important;
+      animation: karaokePulse 1s infinite alternate;
+    }
+
+    .karaoke-word-chip.state-perfect {
+      border-color: var(--color-mint) !important;
+      background: #DCFCE7 !important;
+      color: #15803D !important;
+      box-shadow: 0 3px 0 #16A34A !important;
+      transform: translateY(-2px);
+      animation: karaokePop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .karaoke-word-chip.state-close {
+      border-color: #F59E0B !important;
+      background: #FEF3C7 !important;
+      color: #B45309 !important;
+      box-shadow: 0 3px 0 #D97706 !important;
+    }
+
+    .karaoke-word-chip.state-missed {
+      border-color: var(--color-coral) !important;
+      background: var(--color-coral-tint) !important;
+      color: var(--color-coral) !important;
+      box-shadow: 0 3px 0 rgba(239, 68, 68, 0.4) !important;
+    }
+
+    @keyframes karaokePulse {
+      0% { transform: scale(1.04) translateY(-2px); box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
+      100% { transform: scale(1.1) translateY(-4px); box-shadow: 0 8px 18px rgba(14, 165, 233, 0.35); }
+    }
+
+    @keyframes karaokePop {
+      0% { transform: scale(0.92) translateY(0); }
+      60% { transform: scale(1.12) translateY(-4px); }
+      100% { transform: scale(1) translateY(-2px); }
+    }
+
+    .live-transcript-stream {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--color-purple);
+      background: var(--color-purple-tint);
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 30px;
+      text-align: center;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+
 
 
     .giant-mic-zone {
@@ -23487,501 +23618,371 @@
 
 
       renderSpeakSentence(container, ex) {
-
         this.userAnswer = { score: 0, isPassed: false };
 
-
-
         const audioRow = document.createElement('div');
-
         audioRow.className = 'speak-audio-actions';
 
-
-
         const normalBtn = document.createElement('button');
-
         normalBtn.className = 'btn-3d btn-ghost btn-pill';
-
         normalBtn.style.width = 'auto';
-
-        normalBtn.innerHTML = '<span>🔊 Hear it normally</span>';
-
+        normalBtn.innerHTML = '<span>🔊 Hear normally</span>';
         normalBtn.addEventListener('click', () => {
-
           sounds.playPop();
-
           playTTS(ex.sentence, 0.9);
-
         });
-
-
 
         const slowBtn = document.createElement('button');
-
         slowBtn.className = 'btn-3d btn-ghost btn-pill';
-
         slowBtn.style.width = 'auto';
-
-        slowBtn.innerHTML = '<span>🐢 Hear it slowly</span>';
-
+        slowBtn.innerHTML = '<span>🐢 Hear slowly</span>';
         slowBtn.addEventListener('click', () => {
-
           sounds.playPop();
-
           playTTS(ex.sentence, 0.6);
-
         });
-
-
 
         audioRow.appendChild(normalBtn);
-
         audioRow.appendChild(slowBtn);
-
         container.appendChild(audioRow);
 
+        // Real-Time Interactive Karaoke Phrase Container
+        const karaokeWrapper = document.createElement('div');
+        karaokeWrapper.className = 'speak-karaoke-wrapper';
 
+        const phraseBox = document.createElement('div');
+        phraseBox.className = 'karaoke-phrase-box';
+        phraseBox.id = 'karaokePhraseBox';
 
-        const phraseTitle = document.createElement('div');
+        const rawWords = ex.sentence.trim().split(/\s+/);
+        rawWords.forEach((rawWord, idx) => {
+          const clean = cleanWord(rawWord);
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'karaoke-word-chip';
+          chip.dataset.idx = idx;
+          chip.dataset.clean = clean;
+          chip.dataset.raw = rawWord;
+          chip.title = `Tap to hear "${rawWord}"`;
+          chip.innerHTML = `<span>${rawWord}</span><span class="speaker-sub-icon">🔊</span>`;
 
-        phraseTitle.className = 'speak-target-phrase';
+          chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sounds.playPop();
+            playTTS(rawWord, 0.72);
+            chip.style.transform = 'scale(1.15)';
+            setTimeout(() => { chip.style.transform = ''; }, 200);
+          });
 
-        phraseTitle.textContent = `"${ex.sentence}"`;
+          phraseBox.appendChild(chip);
+        });
 
-        container.appendChild(phraseTitle);
+        karaokeWrapper.appendChild(phraseBox);
 
+        // Real-time live speech subtitle stream
+        const liveStream = document.createElement('div');
+        liveStream.className = 'live-transcript-stream';
+        liveStream.id = 'karaokeLiveStream';
+        liveStream.style.display = 'none';
+        liveStream.innerHTML = '<span>🎙️</span><span id="karaokeLiveText">Listening...</span>';
+        karaokeWrapper.appendChild(liveStream);
 
+        container.appendChild(karaokeWrapper);
 
         const hintTag = document.createElement('div');
-
         hintTag.className = 'speak-hindi-hint';
-
         hintTag.textContent = ex.hindiHint;
-
         container.appendChild(hintTag);
 
-
-
         const micZone = document.createElement('div');
-
         micZone.className = 'giant-mic-zone';
 
-
-
         const micBtn = document.createElement('button');
-
         micBtn.className = 'giant-mic-btn';
-
         micBtn.id = 'giantRealMicBtn';
-
         micBtn.innerHTML = '🎙️';
-
-        micBtn.title = 'Tap and speak out loud';
-
-
+        micBtn.title = 'Tap mic and speak aloud';
 
         const waveBox = document.createElement('div');
-
         waveBox.className = 'sound-wave-container';
-
         waveBox.id = 'speechSoundWave';
-
         for (let i = 0; i < 5; i++) {
-
           const bar = document.createElement('div');
-
           bar.className = 'sound-wave-bar';
-
           waveBox.appendChild(bar);
-
         }
-
-
 
         const micStatus = document.createElement('div');
-
         micStatus.className = 'mic-status-label';
-
         micStatus.id = 'speechStatusText';
-
-        micStatus.textContent = 'Tap mic and speak out loud';
-
-
+        micStatus.textContent = 'Tap mic and speak clearly aloud';
 
         micZone.appendChild(micBtn);
-
         micZone.appendChild(waveBox);
-
         micZone.appendChild(micStatus);
-
         container.appendChild(micZone);
 
-
-
         const evalCard = document.createElement('div');
-
         evalCard.className = 'speech-eval-card';
-
         evalCard.id = 'speechEvalCard';
-
         container.appendChild(evalCard);
 
-
-
         micBtn.addEventListener('click', () => {
-
           sounds.playPop();
-
           this.toggleSpeechRecognition(ex, micBtn, waveBox, micStatus, evalCard);
-
         });
-
-
 
         const fallbackBox = document.createElement('div');
-
         fallbackBox.className = 'mic-fallback-banner';
-
         fallbackBox.innerHTML = `
-
           <span style="font-size: 0.85rem; font-weight: 700; color: #024E7A;">In a quiet or noisy place? You can also practice aloud and confirm:</span>
-
           <button class="btn-3d btn-mint btn-pill" id="selfConfirmedSpokenBtn" style="width: auto;">
-
             <span>I said it out loud! 👍</span>
-
           </button>
-
         `;
-
         container.appendChild(fallbackBox);
 
-
-
         fallbackBox.querySelector('#selfConfirmedSpokenBtn').addEventListener('click', () => {
-
           sounds.playSuccessChime();
-
+          // Sequential green wave on chips
+          const chips = phraseBox.querySelectorAll('.karaoke-word-chip');
+          chips.forEach((chip, i) => {
+            setTimeout(() => {
+              chip.className = 'karaoke-word-chip state-perfect';
+            }, i * 70);
+          });
           this.evaluateSpokenWords(ex.sentence, ex.sentence, evalCard, ex);
-
         });
-
       }
 
+      updateKaraokeLive(spokenText, targetSentence) {
+        const phraseBox = document.getElementById('karaokePhraseBox');
+        if (!phraseBox) return;
 
+        const chips = Array.from(phraseBox.querySelectorAll('.karaoke-word-chip'));
+        const spokenTokens = spokenText.trim().toLowerCase().split(/\s+/).map(w => cleanWord(w)).filter(Boolean);
+
+        let spokenIdx = 0;
+        chips.forEach((chip, chipIdx) => {
+          const targetClean = chip.dataset.clean;
+          let matched = false;
+
+          for (let s = spokenIdx; s < spokenTokens.length; s++) {
+            const spokenWord = spokenTokens[s];
+            if (spokenWord === targetClean) {
+              matched = 'perfect';
+              spokenIdx = s + 1;
+              break;
+            } else if (levenshteinDistance(spokenWord, targetClean) <= 1) {
+              matched = 'close';
+              spokenIdx = s + 1;
+              break;
+            }
+          }
+
+          chip.classList.remove('state-speaking', 'state-perfect', 'state-close', 'state-missed');
+          if (matched === 'perfect') {
+            chip.classList.add('state-perfect');
+          } else if (matched === 'close') {
+            chip.classList.add('state-close');
+          } else if (chipIdx === spokenIdx && spokenTokens.length > 0) {
+            chip.classList.add('state-speaking');
+          }
+        });
+      }
 
       toggleSpeechRecognition(ex, micBtn, waveBox, micStatus, evalCard) {
+        const liveStream = document.getElementById('karaokeLiveStream');
+        const liveText = document.getElementById('karaokeLiveText');
 
         if (!this.recognition) {
-
           showToast('Voice test active! 🎙️');
-
           micBtn.classList.add('listening');
-
           waveBox.classList.add('active');
-
           micStatus.textContent = 'Listening to your speech...';
-
           renderZippyTo('exerciseZippyMount', 'thinking', 60);
-
-
 
           setTimeout(() => {
-
             micBtn.classList.remove('listening');
-
             waveBox.classList.remove('active');
-
             micStatus.textContent = 'Speech captured!';
-
             this.evaluateSpokenWords(ex.sentence, ex.sentence, evalCard, ex);
-
           }, 1400);
-
           return;
-
         }
-
-
 
         if (this.isListening) {
-
           this.recognition.stop();
-
           return;
-
         }
 
-
-
         try {
-
           this.recognition.lang = appState.recognitionLang || 'en-US';
-
           this.recognition.start();
-
           this.isListening = true;
 
-
-
           micBtn.classList.add('listening');
-
           waveBox.classList.add('active');
-
           micStatus.textContent = `Listening (${appState.recognitionLang || 'en-US'})... Speak now! 🎙️`;
-
           renderZippyTo('exerciseZippyMount', 'thinking', 60);
 
-
+          if (liveStream) {
+            liveStream.style.display = 'inline-flex';
+            if (liveText) liveText.textContent = 'Speak clearly aloud...';
+          }
 
           let finalTranscript = '';
 
-
-
           this.recognition.onresult = (event) => {
-
+            let interim = '';
             for (let i = event.resultIndex; i < event.results.length; ++i) {
-
-              finalTranscript += event.results[i][0].transcript;
-
+              if (event.results[i].isFinal) {
+                finalTranscript += event.results[i][0].transcript + ' ';
+              } else {
+                interim += event.results[i][0].transcript;
+              }
             }
 
+            const currentStream = (finalTranscript + ' ' + interim).trim();
+            if (currentStream && liveText) {
+              liveText.textContent = `Hearing: "${currentStream}"`;
+              this.updateKaraokeLive(currentStream, ex.sentence);
+            }
           };
-
-
 
           this.recognition.onerror = (event) => {
-
             console.warn('Speech error:', event.error);
-
             this.isListening = false;
-
             micBtn.classList.remove('listening');
-
             waveBox.classList.remove('active');
-
+            if (liveStream) liveStream.style.display = 'none';
             const friendlyErr = getZippySpeechErrorMessage(event.error);
-
             micStatus.textContent = friendlyErr;
-
             triggerHaptic('error');
-
             showToast(friendlyErr);
-
           };
-
-
 
           this.recognition.onend = () => {
-
             this.isListening = false;
-
             micBtn.classList.remove('listening');
-
             waveBox.classList.remove('active');
-
-            micStatus.textContent = 'Analyzing your spoken words... 🔍';
-
-
+            micStatus.textContent = 'Pronunciation analyzed! ✨';
+            if (liveStream) liveStream.style.display = 'none';
 
             const userWords = finalTranscript.trim() || ex.sentence;
-
             this.evaluateSpokenWords(ex.sentence, userWords, evalCard, ex);
-
           };
-
         } catch (err) {
-
           console.warn('Speech start error:', err);
-
           this.isListening = false;
-
           micBtn.classList.remove('listening');
-
           waveBox.classList.remove('active');
-
+          if (liveStream) liveStream.style.display = 'none';
           micStatus.textContent = 'Tap to try again';
-
         }
-
       }
 
-
-
       evaluateSpokenWords(targetSentence, userTranscript, evalCard, ex) {
-
         evalCard.style.display = 'flex';
-
         evalCard.innerHTML = '';
 
-
+        const phraseBox = document.getElementById('karaokePhraseBox');
+        const chips = phraseBox ? Array.from(phraseBox.querySelectorAll('.karaoke-word-chip')) : [];
 
         const targetWords = targetSentence.trim().split(/\s+/);
-
-        const transcriptWords = userTranscript.trim().split(/\s+/).map(w => cleanWord(w));
-
-
+        const transcriptWords = userTranscript.trim().split(/\s+/).map(w => cleanWord(w)).filter(Boolean);
 
         let points = 0;
-
         let missedWords = [];
-
         const diffTokens = [];
 
-
-
-        targetWords.forEach((rawWord) => {
-
+        targetWords.forEach((rawWord, idx) => {
           const cleaned = cleanWord(rawWord);
-
           let matchFound = false;
-
           let closeFound = false;
 
-
-
           for (let i = 0; i < transcriptWords.length; i++) {
-
             const spoken = transcriptWords[i];
-
             if (spoken === cleaned) {
-
               matchFound = true;
-
               break;
-
-            } else if (levenshteinDistance(spoken, cleaned) <= 2) {
-
+            } else if (levenshteinDistance(spoken, cleaned) <= 1) {
               closeFound = true;
-
             }
-
           }
 
-
-
+          const chip = chips[idx];
           if (matchFound) {
-
             points += 1;
-
             diffTokens.push(`<span class="word-diff correct">${rawWord}</span>`);
-
+            if (chip) chip.className = 'karaoke-word-chip state-perfect';
           } else if (closeFound) {
-
-            points += 0.7;
-
+            points += 0.75;
             diffTokens.push(`<span class="word-diff close" title="Close pronunciation">${rawWord}</span>`);
-
+            if (chip) chip.className = 'karaoke-word-chip state-close';
           } else {
-
             missedWords.push(rawWord);
-
-            diffTokens.push(`<span class="word-diff missed" title="Missed word">${rawWord}</span>`);
-
+            diffTokens.push(`<span class="word-diff missed" title="Tap word above to hear pronunciation">${rawWord}</span>`);
+            if (chip) chip.className = 'karaoke-word-chip state-missed';
           }
-
         });
 
-
-
-        const score = Math.max(40, Math.min(100, Math.round((points / targetWords.length) * 100)));
-
+        const score = Math.max(45, Math.min(100, Math.round((points / targetWords.length) * 100)));
         let starCount = 1;
-
         let starStr = '⭐';
-
-        if (score >= 82) { starCount = 3; starStr = '⭐⭐⭐'; }
-
-        else if (score >= 65) { starCount = 2; starStr = '⭐⭐'; }
-
-
+        if (score >= 80) { starCount = 3; starStr = '⭐⭐⭐'; }
+        else if (score >= 60) { starCount = 2; starStr = '⭐⭐'; }
 
         const statsRow = document.createElement('div');
-
         statsRow.className = 'stars-score-row';
-
         statsRow.innerHTML = `
-
           <div class="stars-display">${starStr}</div>
-
-          <div class="score-badge">Score: ${score}/100</div>
-
+          <div class="score-badge" style="font-weight:900;">Accuracy: ${score}%</div>
         `;
-
         evalCard.appendChild(statsRow);
 
-
-
         const diffFlow = document.createElement('div');
-
         diffFlow.className = 'word-diff-flow';
-
         diffFlow.innerHTML = diffTokens.join(' ');
-
         evalCard.appendChild(diffFlow);
 
-
+        const subNote = document.createElement('div');
+        subNote.style.fontSize = '0.78rem';
+        subNote.style.fontWeight = '700';
+        subNote.style.color = 'var(--text-muted)';
+        subNote.style.marginTop = '2px';
+        subNote.textContent = '💡 Tap any word above to hear its slow pronunciation';
+        evalCard.appendChild(subNote);
 
         const transcriptSub = document.createElement('div');
-
         transcriptSub.className = 'user-transcript-subtext';
-
-        transcriptSub.textContent = `You said: "${userTranscript}"`;
-
+        transcriptSub.textContent = `Captured: "${userTranscript}"`;
         evalCard.appendChild(transcriptSub);
-
-
 
         activeSpeakingTracker.recordSpokenSpeech(Math.max(2, Math.round(targetWords.length * 0.5)));
 
-
-
         const ieTip = checkIndianEnglishTips(targetSentence, missedWords);
-
         if (ieTip) {
-
           const tipBox = document.createElement('div');
-
           tipBox.className = 'ie-tip-box';
-
           tipBox.innerHTML = `<span>🗣️</span><div style="flex:1;">${ieTip}</div><button class="vernacular-chip-btn" onclick="mouthGuideEngine.open()" style="margin-left: 8px;">👄 Mouth Guide</button>`;
-
           evalCard.appendChild(tipBox);
-
         }
-
-
 
         const vernBox = document.createElement('div');
-
         vernBox.style.marginTop = '6px';
-
         vernBox.innerHTML = `<button class="vernacular-chip-btn" onclick="const b = this.nextElementSibling; b.style.display = b.style.display === 'block' ? 'none' : 'block';">🌐 Native Scaffolding</button><div class="vernacular-translation-box">${vernacularEngine.getTranslation(targetSentence)}</div>`;
-
         evalCard.appendChild(vernBox);
 
-
-
         if (starCount >= 2) {
-
           renderZippyTo('exerciseZippyMount', 'celebrating', 60);
-
           sounds.playSuccessChime();
-
         } else {
-
           renderZippyTo('exerciseZippyMount', 'encouraging', 60);
-
           sounds.playBoing();
-
         }
 
-
-
         this.userAnswer = { score: score, isPassed: score >= 60 };
-
         this.setCheckEnabled(true);
-
       }      evaluateCurrent() {
         const ex = this.currentExercise;
         let isCorrect = false;

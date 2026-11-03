@@ -1,5 +1,5 @@
-// FunLingo Network-First PWA Service Worker v3
-const CACHE_NAME = 'funlingo-pwa-v3';
+// FunLingo Network-First PWA Service Worker v4
+const CACHE_NAME = 'funlingo-pwa-v4';
 const ASSETS = [
   './',
   './index.html',
