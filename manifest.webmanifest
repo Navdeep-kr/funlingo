@@ -1,13 +1,14 @@
 {
-  "name": "SpeakQuest - Joyful Spoken English",
-  "short_name": "SpeakQuest",
-  "description": "Master spoken English and pronunciation with Zippy, live branching roleplays, phoneme coaching, and career mode.",
+  "name": "FunLingo - Spoken English Mastery",
+  "short_name": "FunLingo",
+  "description": "Master spoken English confidence with real-time pronunciation karaoke, living mascot Zippy, interactive branching stories, and cooperative speaking duos.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FFFDF8",
+  "background_color": "#0F172A",
   "theme_color": "#845EC2",
+  "categories": ["education", "social", "productivity"],
   "icons": [
     {
       "src": "icon-192.svg",
@@ -20,6 +21,36 @@
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Daily Spoken Practice",
+      "short_name": "Speak",
+      "description": "Practice spoken English with real-time karaoke phoneme feedback",
+      "url": "./?action=speak",
+      "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Coffee Break Stories",
+      "short_name": "Talk",
+      "description": "Interactive branching spoken role-play dialogues",
+      "url": "./?action=talk",
+      "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Weekly Leagues",
+      "short_name": "Leagues",
+      "description": "30-player weekly spoken leaderboard",
+      "url": "./?action=leagues",
+      "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Speaking Duos",
+      "short_name": "Duos",
+      "description": "Cooperative partner practice and shared duo streak",
+      "url": "./?action=duos",
+      "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }]
     }
   ]
 }
