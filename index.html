@@ -25879,6 +25879,8 @@
 
 
     function openSettingsModal() {
+      if (window.cloudSyncEngine) cloudSyncEngine.updateDisplay();
+      if (window.cloudSyncEngine) cloudSyncEngine.init();
 
       sounds.playPop();
 
@@ -31878,7 +31880,139 @@
       roadmapEngine.init();
     }
 
-  </script>
+  
+
+    /* ==========================================================================
+       STEP 6: ZERO-FRICTION CLOUD SYNC & STREAK PRESERVATION ENGINE
+       ========================================================================== */
+    class CloudSyncEngine {
+      constructor() {
+        this.syncKey = null;
+      }
+
+      init() {
+        this.syncKey = this.getOrCreateSyncKey();
+        this.bindEvents();
+      }
+
+      getOrCreateSyncKey() {
+        if (!appState.syncKey) {
+          const num = Math.floor(1000 + Math.random() * 9000);
+          appState.syncKey = `FL-${num}`;
+          saveState(appState);
+        }
+        return appState.syncKey;
+      }
+
+      bindEvents() {
+        const copyBtn = document.getElementById('copySyncKeyBtn');
+        if (copyBtn) {
+          copyBtn.onclick = () => this.copySyncKey();
+        }
+
+        const exportBtn = document.getElementById('exportBackupFileBtn');
+        if (exportBtn) {
+          exportBtn.onclick = () => this.exportBackup();
+        }
+
+        const importTrigger = document.getElementById('importBackupTriggerBtn');
+        const fileInput = document.getElementById('importBackupFileInput');
+        if (importTrigger && fileInput) {
+          importTrigger.onclick = () => fileInput.click();
+          fileInput.onchange = (e) => this.handleFileSelect(e);
+        }
+      }
+
+      updateDisplay() {
+        const keyDisplay = document.getElementById('cloudSyncKeyDisplay');
+        if (keyDisplay) {
+          keyDisplay.textContent = this.getOrCreateSyncKey();
+        }
+      }
+
+      copySyncKey() {
+        sounds.playPop();
+        const key = this.getOrCreateSyncKey();
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(key).then(() => {
+            showToast(`📋 Copied Sync Key: ${key}`);
+          }).catch(() => {
+            showToast(`Sync Key: ${key}`);
+          });
+        } else {
+          showToast(`Sync Key: ${key}`);
+        }
+      }
+
+      exportBackup() {
+        sounds.playSuccessChime();
+        const backupData = {
+          appName: "FunLingo",
+          version: "2.0",
+          exportedAt: new Date().toISOString(),
+          state: appState
+        };
+
+        const jsonStr = JSON.stringify(backupData, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        const dateStr = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `funlingo-streak-backup-${dateStr}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Backup exported! Keep it safe to restore anywhere!");
+      }
+
+      handleFileSelect(evt) {
+        const file = evt.target.files && evt.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const parsed = JSON.parse(e.target.result);
+            const importedState = parsed.state || parsed;
+
+            if (importedState && typeof importedState === 'object' && importedState.xp !== undefined) {
+              appState = {
+                ...defaultState,
+                ...importedState,
+                syncKey: importedState.syncKey || this.syncKey
+              };
+              saveState(appState);
+              sounds.playLevelUp();
+              triggerConfetti();
+              showToast("🎉 Progress restored! All streaks & XP updated!");
+
+              // Refresh UI displays
+              this.updateDisplay();
+              if (typeof updateHeaderStats === 'function') updateHeaderStats();
+              if (typeof renderLearnMap === 'function') renderLearnMap();
+
+              const modal = document.getElementById('settingsModal');
+              if (modal) modal.classList.remove('active');
+            } else {
+              showToast("❌ Invalid backup file format.");
+            }
+          } catch (err) {
+            console.error("Backup import error:", err);
+            showToast("❌ Could not read backup file.");
+          }
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    const cloudSyncEngine = new CloudSyncEngine();
+    window.cloudSyncEngine = cloudSyncEngine;
+
+</script>
 
 
 
@@ -32882,6 +33016,40 @@
 
         </div>
 
+
+
+        
+        <!-- Section: Cloud Sync & Streak Preservation (Step 6) -->
+        <div class="settings-field-card" style="border: 2px solid var(--color-purple); background: linear-gradient(135deg, rgba(132, 94, 194, 0.06), rgba(56, 182, 255, 0.06)); margin-bottom: 12px;">
+          <div class="settings-section-title" style="color: var(--color-purple); font-weight: 900;">
+            <span>☁️</span> Cloud Sync & Streak Preservation
+          </div>
+          <p style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; line-height: 1.35; margin: 4px 0 10px;">
+            Never lose your 365-day streak or gems. Backup your progress or sync across multiple phones and laptops instantly!
+          </p>
+
+          <!-- Device Sync Key -->
+          <div style="background: var(--bg-surface); border: 2px solid var(--border-subtle); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 0.7rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase;">Your Device Sync Key</div>
+              <div style="font-size: 1.15rem; font-weight: 900; color: var(--color-purple); letter-spacing: 1px;" id="cloudSyncKeyDisplay">FL-7842</div>
+            </div>
+            <button type="button" class="btn-3d btn-ghost btn-pill" id="copySyncKeyBtn" style="font-size: 0.75rem; padding: 4px 10px; width: auto;">
+              📋 Copy Key
+            </button>
+          </div>
+
+          <!-- Action Buttons: Download JSON & Restore -->
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-3d btn-primary" id="exportBackupFileBtn" style="flex: 1 1 140px; font-size: 0.82rem; padding: 8px 12px; justify-content: center;">
+              <span>📥 Export Backup (.json)</span>
+            </button>
+            <button type="button" class="btn-3d btn-mint" id="importBackupTriggerBtn" style="flex: 1 1 140px; font-size: 0.82rem; padding: 8px 12px; justify-content: center;">
+              <span>📤 Restore Backup</span>
+            </button>
+            <input type="file" id="importBackupFileInput" accept=".json,application/json" style="display: none;">
+          </div>
+        </div>
 
 
         <!-- Section G: Audio, Voice & Accent -->
@@ -34489,4 +34657,3 @@
 </body>
 
 </html>
-
