@@ -10364,7 +10364,349 @@
 
 
 
-  </style>
+  
+    /* --- STEP 7: SOCIAL QUESTS, LEAGUES & SPEAKING DUOS --- */
+    .social-tabs-nav {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      background: var(--bg-surface-soft);
+      padding: 5px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-subtle);
+    }
+    .social-tab-btn {
+      flex: 1;
+      padding: 10px 8px;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .social-tab-btn.active {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      font-weight: 900;
+    }
+    .social-panel {
+      display: none;
+      animation: fadeInPanel 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .social-panel.active {
+      display: block;
+    }
+    @keyframes fadeInPanel {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* LEAGUES STYLES */
+    .league-hero-card {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #FDE68A 100%);
+      border: 3px solid #F59E0B;
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 0 #D97706;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .league-countdown-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #92400E;
+    }
+    .league-roadmap {
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+      background: var(--bg-surface);
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 14px;
+      overflow-x: auto;
+    }
+    .league-tier-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      opacity: 0.6;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .league-tier-step.active {
+      opacity: 1;
+      background: rgba(245, 158, 11, 0.15);
+      color: #B45309;
+      font-weight: 900;
+      transform: scale(1.05);
+    }
+    .podium-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 12px;
+      margin: 16px 0 20px;
+      padding: 0 8px;
+    }
+    .podium-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      max-width: 105px;
+      text-align: center;
+    }
+    .podium-avatar {
+      font-size: 2rem;
+      position: relative;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+    .podium-crown {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.1rem;
+    }
+    .podium-name {
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90px;
+    }
+    .podium-xp {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #F59E0B;
+      margin-bottom: 4px;
+    }
+    .podium-pedestal {
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #FFF;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+    }
+    .pedestal-1 { height: 74px; background: linear-gradient(180deg, #F59E0B, #D97706); font-size: 1.3rem; }
+    .pedestal-2 { height: 56px; background: linear-gradient(180deg, #94A3B8, #64748B); font-size: 1.1rem; }
+    .pedestal-3 { height: 44px; background: linear-gradient(180deg, #D97706, #B45309); font-size: 1.0rem; }
+
+    /* LEAGUE ROSTER TABLE */
+    .league-roster-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .league-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
+      gap: 10px;
+    }
+    .league-row-promo {
+      border-left: 5px solid #10B981;
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.05) 0%, var(--bg-surface) 100%);
+    }
+    .league-row-demote {
+      border-left: 5px solid #EF4444;
+      background: linear-gradient(90deg, rgba(239, 68, 68, 0.04) 0%, var(--bg-surface) 100%);
+    }
+    .league-row-user {
+      border: 2.5px solid var(--color-mint);
+      background: linear-gradient(90deg, rgba(32, 191, 107, 0.12) 0%, var(--bg-surface) 100%);
+      box-shadow: 0 0 12px rgba(32, 191, 107, 0.25);
+      position: sticky;
+      bottom: 74px;
+      z-index: 10;
+    }
+    .league-rank-col {
+      width: 28px;
+      font-weight: 900;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .league-avatar-col {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-surface-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .league-name-col {
+      flex: 1;
+      min-width: 0;
+    }
+    .league-player-name {
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .league-player-sub {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .league-xp-col {
+      font-weight: 900;
+      font-size: 0.88rem;
+      color: #D97706;
+      text-align: right;
+    }
+    .league-divider-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+    .league-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    /* SPEAKING DUOS STYLES */
+    .duo-hero-card {
+      background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #C7D2FE 100%);
+      border: 3px solid #6366F1;
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 0 #4F46E5;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .duo-pair-avatars {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+    }
+    .duo-member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-align: center;
+    }
+    .duo-avatar-frame {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 3px solid #6366F1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 8px rgba(99, 102, 241, 0.2);
+    }
+    .duo-flame-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .duo-flame-icon {
+      font-size: 2.2rem;
+      animation: flamePulse 1.8s ease-in-out infinite alternate;
+    }
+    @keyframes flamePulse {
+      0% { transform: scale(0.95); filter: drop-shadow(0 0 2px #F59E0B); }
+      100% { transform: scale(1.15); filter: drop-shadow(0 0 10px #EF4444); }
+    }
+    .duo-shared-goal-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 3px 0 var(--border-subtle);
+    }
+    .duo-multi-progress {
+      height: 12px;
+      background: var(--bg-surface-soft);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      display: flex;
+      margin: 8px 0;
+      border: 1px solid var(--border-subtle);
+    }
+    .duo-prog-user {
+      background: #3B82F6;
+      height: 100%;
+      transition: width 0.4s ease;
+    }
+    .duo-prog-partner {
+      background: #F97316;
+      height: 100%;
+      transition: width 0.4s ease;
+    }
+    .duo-buddy-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .duo-buddy-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+    }
+    .duo-buddy-card:hover {
+      border-color: #6366F1;
+    }
+
+</style>
 
 </head>
 
@@ -11272,7 +11614,22 @@
 
 
 
-      <div class="seasonal-event-card" id="seasonalEventBanner">
+            <!-- SOCIAL SUB-TABS NAV -->
+      <div class="social-tabs-nav" role="tablist">
+        <button class="social-tab-btn active" data-social-tab="quests" id="socialTabQuests">
+          <span>🎯</span> Quests & Events
+        </button>
+        <button class="social-tab-btn" data-social-tab="leagues" id="socialTabLeagues">
+          <span>🏆</span> Leagues
+        </button>
+        <button class="social-tab-btn" data-social-tab="duos" id="socialTabDuos">
+          <span>👥</span> Speaking Duos
+        </button>
+      </div>
+
+      <!-- SOCIAL PANEL 1: DAILY QUESTS & SEASONAL EVENTS -->
+      <div id="panelSocialQuests" class="social-panel active">
+<div class="seasonal-event-card" id="seasonalEventBanner">
 
         <div style="display: flex; justify-content: space-between; align-items: center;">
 
@@ -11734,7 +12091,196 @@
 
 
 
-    </section>
+          </div>
+
+      <!-- SOCIAL PANEL 2: LEAGUES -->
+      <div id="panelSocialLeagues" class="social-panel">
+        
+        <!-- League Tier Hero Card -->
+        <div class="league-hero-card" id="leagueHeroCard">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 2rem;" id="leagueHeroIcon">🏆</span>
+              <div>
+                <h3 style="font-size: 1.25rem; font-weight: 900; color: #92400E; margin-bottom: 2px;" id="leagueHeroTitle">GOLD LEAGUE</h3>
+                <span style="font-size: 0.74rem; font-weight: 800; color: #B45309;">Week 42 • Season 7</span>
+              </div>
+            </div>
+            <span class="league-countdown-pill" id="leagueCountdownPill">
+              <span>⏳</span>
+              <span id="leagueCountdownTimer">Ends in 2d 14h 28m</span>
+            </span>
+          </div>
+
+          <!-- Tier Roadmap -->
+          <div class="league-roadmap">
+            <div class="league-tier-step" data-tier="Bronze"><span>🥉</span> Bronze</div>
+            <div class="league-tier-step" data-tier="Silver"><span>🥈</span> Silver</div>
+            <div class="league-tier-step active" data-tier="Gold"><span>🥇</span> Gold</div>
+            <div class="league-tier-step" data-tier="Diamond"><span>💎</span> Diamond</div>
+            <div class="league-tier-step" data-tier="Obsidian"><span>🔮</span> Obsidian</div>
+          </div>
+
+          <div style="font-size: 0.8rem; font-weight: 800; color: #78350F; background: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 8px;">
+            ⚡ <strong>Rules:</strong> Top 7 advance to Diamond League! Bottom 6 drop to Silver. Practice daily speaking to gain XP and defend your rank!
+          </div>
+        </div>
+
+        <!-- Top 3 Podium -->
+        <h4 style="font-size: 0.95rem; font-weight: 900; margin-bottom: 8px; color: var(--text-main);">👑 League Leaders Podium</h4>
+        <div class="podium-container" id="leaguePodiumContainer"></div>
+
+        <!-- 30-Player Roster Table -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h4 style="font-size: 0.95rem; font-weight: 900; color: var(--text-main);">📋 Live 30-Player Standings</h4>
+          <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted);" id="userLeagueRankBadge">Your Rank: #4</span>
+        </div>
+
+        <div class="league-roster-list" id="leagueRosterList"></div>
+
+        <button class="btn-3d btn-primary" id="leaguePracticeClimbBtn" style="width: 100%; padding: 14px; font-size: 0.92rem; margin-top: 10px;">
+          <span>🎙️ Practice Speaking to Climb (+20 XP)</span>
+        </button>
+
+      </div>
+
+      <!-- SOCIAL PANEL 3: SPEAKING DUOS -->
+      <div id="panelSocialDuos" class="social-panel">
+        
+        <!-- Duo Hero Streak Banner -->
+        <div class="duo-hero-card" id="duoHeroCard">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="chip" style="background: #4F46E5; color: #FFF; font-size: 0.72rem; padding: 2px 8px;">🤝 COOPERATIVE DUO STREAK</span>
+            <span style="font-size: 0.75rem; font-weight: 800; color: #4338CA;" id="duoPartnerLocation">📍 Bengaluru</span>
+          </div>
+
+          <div class="duo-pair-avatars">
+            <div class="duo-member">
+              <div class="duo-avatar-frame" id="duoMyAvatar">🌟</div>
+              <span style="font-size: 0.85rem; font-weight: 900; color: #1E1B4B;">You</span>
+              <span class="chip" style="background: #10B981; color: #FFF; font-size: 0.65rem;" id="duoMyStatusChip">Practiced ✅</span>
+            </div>
+
+            <div class="duo-flame-connector">
+              <span class="duo-flame-icon">🔥</span>
+              <span style="font-size: 1.1rem; font-weight: 900; color: #EA580C;" id="duoStreakNumber">7 DAYS</span>
+              <span style="font-size: 0.68rem; font-weight: 800; color: #4338CA;">SHARED FLAME</span>
+            </div>
+
+            <div class="duo-member">
+              <div class="duo-avatar-frame" id="duoPartnerAvatar">🧑🏽‍💻</div>
+              <span style="font-size: 0.85rem; font-weight: 900; color: #1E1B4B;" id="duoPartnerName">Aarav Patel</span>
+              <span class="chip" style="background: #10B981; color: #FFF; font-size: 0.65rem;" id="duoPartnerStatusChip">Practiced ✅</span>
+            </div>
+          </div>
+
+          <div id="duoStatusMessageBanner" style="font-size: 0.82rem; font-weight: 800; color: #312E81; background: rgba(255,255,255,0.7); padding: 8px 12px; border-radius: 8px; text-align: center;">
+            🎉 Both practiced today! Your shared speaking streak is safe until tomorrow midnight.
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button class="btn-3d btn-primary btn-pill" id="duoNudgePartnerBtn" style="flex: 1; font-size: 0.78rem; padding: 8px 12px;">
+              <span>💬 Nudge Partner</span>
+            </button>
+            <button class="btn-3d btn-ghost btn-pill" id="duoPracticeTogetherBtn" style="flex: 1; font-size: 0.78rem; padding: 8px 12px;">
+              <span>🎙️ Practice Daily Line</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Weekly Shared Goal Card -->
+        <div class="duo-shared-goal-card" id="duoSharedGoalCard">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="chip" style="background: #6366F1; color: #FFF; font-size: 0.7rem;">👑 WEEKLY DUO GOAL</span>
+            <span style="font-size: 0.74rem; font-weight: 800; color: #6366F1;" id="duoWeeklyGoalReset">Resets Sunday</span>
+          </div>
+
+          <h4 style="font-size: 1.05rem; font-weight: 900; color: var(--text-main); margin-bottom: 3px;">
+            Speak 40 Sentences Together this Week
+          </h4>
+          <p style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; line-height: 1.3; margin-bottom: 8px;">
+            Every spoken sentence you or your partner completes counts towards unlocking the mega chest!
+          </p>
+
+          <div class="duo-multi-progress">
+            <div class="duo-prog-user" id="duoProgUserBar" style="width: 45%;" title="Your Sentences"></div>
+            <div class="duo-prog-partner" id="duoProgPartnerBar" style="width: 40%;" title="Partner Sentences"></div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 800; color: var(--text-muted); margin-bottom: 10px;">
+            <span><span style="color: #3B82F6;">● You: <span id="duoUserCount">18</span></span> | <span style="color: #F97316;">● Aarav: <span id="duoPartnerCount">16</span></span></span>
+            <span id="duoTotalCount">34 / 40 (85%)</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.85rem; font-weight: 900; color: #D97706;">Reward: +120 ⚡ XP & +40 💎</span>
+            <button class="btn-3d btn-primary btn-pill" id="duoClaimWeeklyBtn" style="font-size: 0.78rem; padding: 8px 14px; width: auto;" disabled>
+              <span>Claim Chest 🎁</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Duo Pairing & Invite Card -->
+        <div style="background: var(--bg-surface); border: 2px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 14px;">
+          <h4 style="font-size: 0.95rem; font-weight: 900; margin-bottom: 4px;">🔗 Invite a Real Friend to Pair Up</h4>
+          <p style="font-size: 0.76rem; color: var(--text-muted); font-weight: 700; line-height: 1.35; margin-bottom: 10px;">
+            Share your unique Duo Link. When your friend opens it on their device, you both automatically become speaking streak partners!
+          </p>
+
+          <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+            <input type="text" id="duoShareLinkInput" readonly style="flex: 1; min-width: 180px; padding: 8px 12px; font-size: 0.82rem; font-weight: 700; border: 2px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--bg-surface-soft);" value="https://navdeep-kr.github.io/funlingo/?duo=FL-8947">
+            <button class="btn-3d btn-primary" id="duoCopyLinkBtn" style="width: auto; padding: 8px 14px; font-size: 0.8rem;">
+              <span>Copy Link 📋</span>
+            </button>
+          </div>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <input type="text" id="duoConnectCodeInput" placeholder="Enter friend's Duo ID (e.g. FL-2041)" style="flex: 1; min-width: 180px; padding: 8px 12px; font-size: 0.82rem; font-weight: 700; border: 2px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--bg-surface);">
+            <button class="btn-3d btn-mint" id="duoConnectCodeBtn" style="width: auto; padding: 8px 14px; font-size: 0.8rem;">
+              <span>Connect 🤝</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Instant Match Practice Buddies -->
+        <div>
+          <h4 style="font-size: 0.95rem; font-weight: 900; margin-bottom: 4px;">⚡ Instant Active Study Buddies</h4>
+          <p style="font-size: 0.76rem; color: var(--text-muted); font-weight: 700; margin-bottom: 8px;">
+            Need a high-commitment practice partner? Pair up instantly with active learners:
+          </p>
+
+          <div class="duo-buddy-grid" id="duoBuddyGrid">
+            <div class="duo-buddy-card">
+              <span style="font-size: 1.8rem;">👩🏽‍💼</span>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-size: 0.88rem; font-weight: 900; color: var(--text-main);">Priya M. <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">• Mumbai</span></div>
+                <div style="font-size: 0.72rem; font-weight: 800; color: #10B981;">🔥 14-day streak • 99% daily practice rate</div>
+              </div>
+              <button class="btn-3d btn-ghost btn-pill duo-pair-instant-btn" data-name="Priya M." data-avatar="👩🏽‍💼" data-loc="Mumbai" data-id="FL-9104" style="font-size: 0.72rem; padding: 6px 12px; width: auto;">Pair Up</button>
+            </div>
+
+            <div class="duo-buddy-card">
+              <span style="font-size: 1.8rem;">👨🏽‍💻</span>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-size: 0.88rem; font-weight: 900; color: var(--text-main);">Rohan K. <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">• Bengaluru</span></div>
+                <div style="font-size: 0.72rem; font-weight: 800; color: #3B82F6;">🔥 9-day streak • Software Engineer small talk</div>
+              </div>
+              <button class="btn-3d btn-ghost btn-pill duo-pair-instant-btn" data-name="Rohan K." data-avatar="👨🏽‍💻" data-loc="Bengaluru" data-id="FL-3382" style="font-size: 0.72rem; padding: 6px 12px; width: auto;">Pair Up</button>
+            </div>
+
+            <div class="duo-buddy-card">
+              <span style="font-size: 1.8rem;">👩🏻‍🎓</span>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-size: 0.88rem; font-weight: 900; color: var(--text-main);">Sneha D. <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">• Delhi</span></div>
+                <div style="font-size: 0.72rem; font-weight: 800; color: #F59E0B;">🔥 21-day streak • Daily Spoken English Master</div>
+              </div>
+              <button class="btn-3d btn-ghost btn-pill duo-pair-instant-btn" data-name="Sneha D." data-avatar="👩🏻‍🎓" data-loc="Delhi" data-id="FL-6519" style="font-size: 0.72rem; padding: 6px 12px; width: auto;">Pair Up</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+</section>
 
 
 
@@ -14935,7 +15481,29 @@
 
       hasPracticedNight: false,
 
-      gameHighScores: { bubble_pop: 0, speak_sprint: 0, sentence_stack: 0, echo_challenge: 0, odd_one_out: 0 }
+      gameHighScores: { bubble_pop: 0, speak_sprint: 0, sentence_stack: 0, echo_challenge: 0, odd_one_out: 0 },
+    duoQuest: {
+      partnerName: 'Aarav Patel',
+      partnerAvatar: '🧑🏽‍💻',
+      partnerLocation: 'Bengaluru',
+      partnerDuoId: 'FL-7721',
+      myDuoId: 'FL-8947',
+      duoStreak: 7,
+      lastDuoPracticeDate: '2026-11-03',
+      partnerPracticedToday: true,
+      weeklyGoalTarget: 40,
+      myWeeklyProgress: 18,
+      partnerWeeklyProgress: 16,
+      claimedWeeklyReward: false
+    },
+    leagueState: {
+      currentTier: 'Gold',
+      seasonWeek: 42,
+      userScore: 420,
+      tierColor: '#F59E0B',
+      lastUpdated: '2026-11-03',
+      roster: []
+    }
 
     };
 
@@ -14965,7 +15533,9 @@
 
             speakingCheckins: { ...defaultState.speakingCheckins, ...(parsed.speakingCheckins || {}) },
 
-            gameHighScores: { ...defaultState.gameHighScores, ...(parsed.gameHighScores || {}) }
+            gameHighScores: { ...defaultState.gameHighScores, ...(parsed.gameHighScores || {}) },
+              duoQuest: { ...defaultState.duoQuest, ...(parsed.duoQuest || {}) },
+              leagueState: { ...defaultState.leagueState, ...(parsed.leagueState || {}) }
 
           };
 
@@ -17773,6 +18343,9 @@
       checkLevelUp(oldXP, appState.xp);
 
       checkBadges();
+
+      if (window.leaguesEngine) window.leaguesEngine.addUserXP(boostedXP);
+      if (window.speakingDuosEngine) window.speakingDuosEngine.recordPracticeActivity();
 
       return boostedXP;
 
@@ -30958,7 +31531,7 @@
 
       aiFreeTalkEngine.init();
 
-      speakingDuosEngine.init();
+      socialDuosEngine.init();
 
       activeSpeakingTracker.updateUI();
 
@@ -32011,6 +32584,531 @@
 
     const cloudSyncEngine = new CloudSyncEngine();
     window.cloudSyncEngine = cloudSyncEngine;
+
+
+    /* --- STEP 7: LEAGUES ENGINE --- */
+    class LeaguesEngine {
+      constructor() {
+        this.countdownInterval = null;
+        this.mockNames = [
+          { name: "Vikram Rao", avatar: "🦁", loc: "Hyderabad" },
+          { name: "Ananya Verma", avatar: "👩🏽‍💻", loc: "Bengaluru" },
+          { name: "Kavya Sharma", avatar: "⚡", loc: "Pune" },
+          { name: "Aarav Patel", avatar: "🧑🏽‍💻", loc: "Ahmedabad" },
+          { name: "Sneha Deshmukh", avatar: "🌟", loc: "Mumbai" },
+          { name: "Rahul Nair", avatar: "🚀", loc: "Kochi" },
+          { name: "Pooja Hegde", avatar: "🌺", loc: "Mangalore" },
+          { name: "Arjun Mehta", avatar: "🎯", loc: "Delhi" },
+          { name: "Riya Sen", avatar: "🦄", loc: "Kolkata" },
+          { name: "Ishaan Gupta", avatar: "🔥", loc: "Jaipur" },
+          { name: "Neha Joshi", avatar: "🎨", loc: "Indore" },
+          { name: "Karan Johar", avatar: "🎬", loc: "Chandigarh" },
+          { name: "Tanvi Kulkarni", avatar: "📚", loc: "Nagpur" },
+          { name: "Devansh Roy", avatar: "⚡", loc: "Lucknow" },
+          { name: "Simran Kaur", avatar: "✨", loc: "Amritsar" },
+          { name: "Aditya Bhat", avatar: "🎸", loc: "Mysore" },
+          { name: "Meera Iyer", avatar: "☕", loc: "Chennai" },
+          { name: "Varun Kapoor", avatar: "💼", loc: "Gurugram" },
+          { name: "Divya Reddy", avatar: "💎", loc: "Visakhapatnam" },
+          { name: "Rohan Malhotra", avatar: "🥋", loc: "Noida" },
+          { name: "Nisha Agarwal", avatar: "🌈", loc: "Surat" },
+          { name: "Siddharth Jain", avatar: "🍕", loc: "Bhopal" },
+          { name: "Priyanka Das", avatar: "🌸", loc: "Guwahati" },
+          { name: "Harsh Vardhan", avatar: "🏆", loc: "Patna" },
+          { name: "Anjali Saxena", avatar: "⭐", loc: "Kanpur" },
+          { name: "Manish Pandey", avatar: "🏏", loc: "Dehradun" },
+          { name: "Shreya Ghoshal", avatar: "🎶", loc: "Vadodara" },
+          { name: "Farhan Akhtar", avatar: "🚴", loc: "Goa" },
+          { name: "Zoya Akhtar", avatar: "📽️", loc: "Agra" }
+        ];
+      }
+
+      init() {
+        this.ensureRoster();
+        this.render();
+        this.startCountdown();
+
+        const climbBtn = document.getElementById('leaguePracticeClimbBtn');
+        if (climbBtn) {
+          climbBtn.addEventListener('click', () => {
+            if (typeof switchScreen === 'function') switchScreen('learn');
+          });
+        }
+      }
+
+      ensureRoster() {
+        if (!appState.leagueState) {
+          appState.leagueState = {
+            currentTier: 'Gold',
+            seasonWeek: 42,
+            userScore: Math.max(420, appState.xp || 420),
+            tierColor: '#F59E0B',
+            lastUpdated: new Date().toISOString().slice(0, 10),
+            roster: []
+          };
+        }
+
+        if (!appState.leagueState.roster || appState.leagueState.roster.length < 29) {
+          const roster = [];
+          let baseXP = 840;
+          this.mockNames.forEach((peer, idx) => {
+            baseXP -= Math.floor(Math.random() * 24) + 14;
+            roster.push({
+              id: 'peer_' + idx,
+              name: peer.name,
+              avatar: peer.avatar,
+              loc: peer.loc,
+              score: Math.max(45, baseXP),
+              isUser: false
+            });
+          });
+          appState.leagueState.roster = roster;
+          saveState(appState);
+        }
+      }
+
+      startCountdown() {
+        if (this.countdownInterval) clearInterval(this.countdownInterval);
+        const update = () => {
+          const now = new Date();
+          const d = new Date(now);
+          const day = d.getDay();
+          const diffToSunday = (7 - day) % 7;
+          const target = new Date(d.getFullYear(), d.getMonth(), d.getDate() + diffToSunday, 23, 59, 59);
+          if (target <= now) target.setDate(target.getDate() + 7);
+          const ms = target - now;
+          const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+          const mins = Math.floor((ms / (1000 * 60)) % 60);
+          const secs = Math.floor((ms / 1000) % 60);
+          const el = document.getElementById('leagueCountdownTimer');
+          if (el) el.textContent = `Ends in ${days}d ${hours}h ${mins}m ${secs}s`;
+        };
+        update();
+        this.countdownInterval = setInterval(update, 1000);
+      }
+
+      addUserXP(amount) {
+        if (!appState.leagueState) this.ensureRoster();
+        const oldScore = appState.leagueState.userScore || 0;
+        appState.leagueState.userScore = oldScore + amount;
+        
+        const fullList = this.getFullSortedRoster();
+        const userIndex = fullList.findIndex(p => p.isUser);
+        const newRank = userIndex + 1;
+
+        saveState(appState);
+        this.render();
+
+        if (newRank <= 3 && oldScore < fullList[2].score) {
+          if (window.sounds) sounds.playLevelUp();
+          showToast(`🏆 Podium Alert! You jumped to Rank #${newRank} in Gold League!`);
+        }
+      }
+
+      getFullSortedRoster() {
+        this.ensureRoster();
+        const userEntry = {
+          id: 'user_player',
+          name: 'YOU (Champion)',
+          avatar: '🌟',
+          loc: 'Your City',
+          score: appState.leagueState.userScore || 420,
+          isUser: true
+        };
+        const list = [...appState.leagueState.roster.filter(p => !p.isUser), userEntry];
+        list.sort((a, b) => b.score - a.score);
+        return list;
+      }
+
+      render() {
+        const list = this.getFullSortedRoster();
+        const userIndex = list.findIndex(p => p.isUser);
+        const userRank = userIndex + 1;
+
+        const rankBadge = document.getElementById('userLeagueRankBadge');
+        if (rankBadge) {
+          rankBadge.textContent = `Your Rank: #${userRank} ${userRank <= 7 ? '🔥 (Promotion Zone)' : ''}`;
+        }
+
+        const podiumCont = document.getElementById('leaguePodiumContainer');
+        if (podiumCont && list.length >= 3) {
+          const first = list[0];
+          const second = list[1];
+          const third = list[2];
+          podiumCont.innerHTML = `
+            <div class="podium-item">
+              <div class="podium-avatar">
+                <span class="podium-crown">🥈</span>
+                ${second.avatar}
+              </div>
+              <div class="podium-name">${second.name}</div>
+              <div class="podium-xp">${second.score} XP</div>
+              <div class="podium-pedestal pedestal-2">2</div>
+            </div>
+            <div class="podium-item">
+              <div class="podium-avatar">
+                <span class="podium-crown">👑</span>
+                ${first.avatar}
+              </div>
+              <div class="podium-name">${first.name}</div>
+              <div class="podium-xp">${first.score} XP</div>
+              <div class="podium-pedestal pedestal-1">1</div>
+            </div>
+            <div class="podium-item">
+              <div class="podium-avatar">
+                <span class="podium-crown">🥉</span>
+                ${third.avatar}
+              </div>
+              <div class="podium-name">${third.name}</div>
+              <div class="podium-xp">${third.score} XP</div>
+              <div class="podium-pedestal pedestal-3">3</div>
+            </div>
+          `;
+        }
+
+        const rosterList = document.getElementById('leagueRosterList');
+        if (rosterList) {
+          let html = '';
+          list.forEach((player, idx) => {
+            const rank = idx + 1;
+            const isPromo = rank <= 7;
+            const isDemote = rank >= 25;
+            const isUser = player.isUser;
+
+            let rowClass = 'league-row';
+            if (isUser) rowClass += ' league-row-user';
+            else if (isPromo) rowClass += ' league-row-promo';
+            else if (isDemote) rowClass += ' league-row-demote';
+
+            let medal = `#${rank}`;
+            if (rank === 1) medal = '🥇';
+            else if (rank === 2) medal = '🥈';
+            else if (rank === 3) medal = '🥉';
+
+            let subText = `${player.loc || 'Learner'} • Active`;
+            if (isUser) subText = '⭐ You • Speaking Master';
+            else if (isPromo) subText += ' • ▲ Promotes';
+            else if (isDemote) subText += ' • ▼ Demotion Risk';
+
+            html += `
+              <div class="${rowClass}">
+                <div class="league-rank-col">${medal}</div>
+                <div class="league-avatar-col">${player.avatar}</div>
+                <div class="league-name-col">
+                  <div class="league-player-name">${player.name}</div>
+                  <div class="league-player-sub">${subText}</div>
+                </div>
+                <div class="league-xp-col">${player.score} ⚡</div>
+              </div>
+            `;
+
+            if (rank === 7) {
+              html += `
+                <div class="league-divider-row">
+                  <div class="league-divider-line" style="background:#10B981;"></div>
+                  <span style="color:#059669;">▲ PROMOTION ZONE (Top 7 Advance)</span>
+                  <div class="league-divider-line" style="background:#10B981;"></div>
+                </div>
+              `;
+            } else if (rank === 24) {
+              html += `
+                <div class="league-divider-row">
+                  <div class="league-divider-line" style="background:#EF4444;"></div>
+                  <span style="color:#DC2626;">▼ DEMOTION ZONE (Bottom 6 Demote)</span>
+                  <div class="league-divider-line" style="background:#EF4444;"></div>
+                </div>
+              `;
+            }
+          });
+          rosterList.innerHTML = html;
+        }
+      }
+    }
+
+    /* --- STEP 7: SOCIAL DUOS ENGINE --- */
+    class SocialDuosEngine {
+      constructor() {}
+
+      init() {
+        this.checkUrlPairing();
+        this.render();
+        this.wireListeners();
+      }
+
+      checkUrlPairing() {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const duoCode = params.get('duo') || params.get('pair');
+          if (duoCode && appState.duoQuest) {
+            if (duoCode.toUpperCase() !== (appState.duoQuest.myDuoId || '').toUpperCase()) {
+              appState.duoQuest.partnerDuoId = duoCode.toUpperCase();
+              appState.duoQuest.partnerName = 'Friend (' + duoCode.toUpperCase() + ')';
+              appState.duoQuest.partnerLocation = 'Linked Partner';
+              appState.duoQuest.partnerPracticedToday = false;
+              saveState(appState);
+              setTimeout(() => {
+                if (typeof switchSocialTab === 'function') switchSocialTab('duos');
+                showToast(`🤝 Duo Partner linked (${duoCode})! Let's build a streak!`);
+                if (window.sounds) sounds.playSuccessChime();
+              }, 600);
+            }
+          }
+        } catch (e) {
+          console.warn('URL pairing parse error:', e);
+        }
+      }
+
+      wireListeners() {
+        const nudgeBtn = document.getElementById('duoNudgePartnerBtn');
+        if (nudgeBtn) {
+          nudgeBtn.addEventListener('click', () => {
+            if (window.sounds) sounds.playSuccessChime();
+            if (typeof triggerHaptic === 'function') triggerHaptic('success');
+            const partner = (appState.duoQuest && appState.duoQuest.partnerName) || 'Friend';
+            const code = (appState.duoQuest && appState.duoQuest.myDuoId) || 'FL-8947';
+            const msg = `Hey ${partner}! Our FunLingo Duo Streak is waiting for you! Don't let our shared flame go out! 🔥 Speak a sentence today: https://navdeep-kr.github.io/funlingo/?duo=${code}`;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(msg).catch(() => {});
+            }
+            showToast(`💬 Nudge sent to ${partner}!`);
+          });
+        }
+
+        const pracBtn = document.getElementById('duoPracticeTogetherBtn');
+        if (pracBtn) {
+          pracBtn.addEventListener('click', () => {
+            if (typeof switchScreen === 'function') switchScreen('talk');
+          });
+        }
+
+        const copyBtn = document.getElementById('duoCopyLinkBtn');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', () => {
+            const inp = document.getElementById('duoShareLinkInput');
+            if (inp) {
+              inp.select();
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(inp.value).catch(() => {});
+              }
+              if (window.sounds) sounds.playPop();
+              showToast('📋 Duo Invite Link copied to clipboard!');
+            }
+          });
+        }
+
+        const connectBtn = document.getElementById('duoConnectCodeBtn');
+        if (connectBtn) {
+          connectBtn.addEventListener('click', () => {
+            const inp = document.getElementById('duoConnectCodeInput');
+            const code = inp ? inp.value.trim().toUpperCase() : '';
+            if (!code) {
+              showToast('⚠️ Please enter a valid Duo ID (e.g. FL-2041)');
+              return;
+            }
+            this.pairWith('Friend (' + code + ')', '🧑🏽‍💻', 'Verified Friend', code);
+            if (inp) inp.value = '';
+          });
+        }
+
+        document.querySelectorAll('.duo-pair-instant-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const name = btn.dataset.name;
+            const avatar = btn.dataset.avatar;
+            const loc = btn.dataset.loc;
+            const id = btn.dataset.id;
+            this.pairWith(name, avatar, loc, id);
+          });
+        });
+
+        const claimBtn = document.getElementById('duoClaimWeeklyBtn');
+        if (claimBtn) {
+          claimBtn.addEventListener('click', () => {
+            if (appState.duoQuest && !appState.duoQuest.claimedWeeklyReward) {
+              appState.duoQuest.claimedWeeklyReward = true;
+              if (typeof awardXP === 'function') awardXP(120);
+              appState.gems = (appState.gems || 0) + 40;
+              saveState(appState);
+              if (window.sounds) sounds.playLevelUp();
+              showToast('🎁 Duo Weekly Chest Claimed! +120 XP & +40 Gems!');
+              this.render();
+            }
+          });
+        }
+      }
+
+      pairWith(name, avatar, loc, id) {
+        if (!appState.duoQuest) return;
+        appState.duoQuest.partnerName = name;
+        appState.duoQuest.partnerAvatar = avatar;
+        appState.duoQuest.partnerLocation = loc;
+        appState.duoQuest.partnerDuoId = id;
+        appState.duoQuest.partnerPracticedToday = true;
+        saveState(appState);
+        if (window.sounds) sounds.playSuccessChime();
+        if (typeof triggerHaptic === 'function') triggerHaptic('success');
+        showToast(`🎉 Paired with ${name}! Your Shared Duo Streak is active!`);
+        this.render();
+      }
+
+      recordPracticeActivity() {
+        if (!appState.duoQuest) return;
+        const today = new Date().toISOString().slice(0, 10);
+        const wasPracticedToday = appState.duoQuest.lastDuoPracticeDate === today;
+        
+        appState.duoQuest.lastDuoPracticeDate = today;
+        appState.duoQuest.myWeeklyProgress = (appState.duoQuest.myWeeklyProgress || 0) + 1;
+        
+        if (!wasPracticedToday) {
+          if (appState.duoQuest.partnerPracticedToday) {
+            appState.duoQuest.duoStreak = (appState.duoQuest.duoStreak || 0) + 1;
+            if (window.sounds) sounds.playStreakFlame();
+            showToast(`🔥 Duo Streak Advanced! Now at ${appState.duoQuest.duoStreak} Days with ${appState.duoQuest.partnerName}!`);
+          }
+        }
+        saveState(appState);
+        this.render();
+      }
+
+      render() {
+        const q = appState.duoQuest;
+        if (!q) return;
+
+        const streakNum = document.getElementById('duoStreakNumber');
+        if (streakNum) streakNum.textContent = `${q.duoStreak || 1} DAYS`;
+
+        const partnerName = document.getElementById('duoPartnerName');
+        if (partnerName) partnerName.textContent = q.partnerName || 'Aarav Patel';
+
+        const partnerAvatar = document.getElementById('duoPartnerAvatar');
+        if (partnerAvatar) partnerAvatar.textContent = q.partnerAvatar || '🧑🏽‍💻';
+
+        const partnerLoc = document.getElementById('duoPartnerLocation');
+        if (partnerLoc) partnerLoc.textContent = `📍 ${q.partnerLocation || 'Bengaluru'}`;
+
+        const partnerStatus = document.getElementById('duoPartnerStatusChip');
+        if (partnerStatus) {
+          if (q.partnerPracticedToday) {
+            partnerStatus.textContent = 'Practiced ✅';
+            partnerStatus.style.background = '#10B981';
+          } else {
+            partnerStatus.textContent = 'Needs Practice ⏳';
+            partnerStatus.style.background = '#F59E0B';
+          }
+        }
+
+        const today = new Date().toISOString().slice(0, 10);
+        const iPracticed = q.lastDuoPracticeDate === today;
+        const banner = document.getElementById('duoStatusMessageBanner');
+        if (banner) {
+          if (iPracticed && q.partnerPracticedToday) {
+            banner.textContent = '🎉 Both practiced today! Your shared speaking streak is safe until tomorrow midnight.';
+            banner.style.color = '#065F46';
+            banner.style.background = 'rgba(209, 250, 229, 0.8)';
+          } else if (iPracticed && !q.partnerPracticedToday) {
+            banner.textContent = `⏳ You practiced! Waiting for ${q.partnerName} to practice today. Send a quick nudge!`;
+            banner.style.color = '#92400E';
+            banner.style.background = 'rgba(254, 243, 199, 0.8)';
+          } else {
+            banner.textContent = `⚡ Speak at least 1 phrase today to keep your ${q.duoStreak}-day Duo Streak burning!`;
+            banner.style.color = '#312E81';
+            banner.style.background = 'rgba(255, 255, 255, 0.7)';
+          }
+        }
+
+        const myProg = q.myWeeklyProgress || 18;
+        const partProg = q.partnerWeeklyProgress || 16;
+        const target = q.weeklyGoalTarget || 40;
+        const total = myProg + partProg;
+        const pct = Math.min(100, Math.round((total / target) * 100));
+
+        const userBar = document.getElementById('duoProgUserBar');
+        const partBar = document.getElementById('duoProgPartnerBar');
+        if (userBar && partBar) {
+          const userPct = Math.round((myProg / target) * 100);
+          const partPct = Math.round((partProg / target) * 100);
+          userBar.style.width = `${Math.min(userPct, 100)}%`;
+          partBar.style.width = `${Math.min(partPct, 100 - userPct)}%`;
+        }
+
+        const userCount = document.getElementById('duoUserCount');
+        if (userCount) userCount.textContent = myProg;
+
+        const partCount = document.getElementById('duoPartnerCount');
+        if (partCount) partCount.textContent = partProg;
+
+        const totCount = document.getElementById('duoTotalCount');
+        if (totCount) totCount.textContent = `${total} / ${target} (${pct}%)`;
+
+        const claimBtn = document.getElementById('duoClaimWeeklyBtn');
+        if (claimBtn) {
+          if (total >= target && !q.claimedWeeklyReward) {
+            claimBtn.disabled = false;
+            claimBtn.classList.remove('btn-ghost');
+            claimBtn.classList.add('btn-primary');
+            claimBtn.innerHTML = '<span>Claim Chest (Ready!) 🎁</span>';
+          } else if (q.claimedWeeklyReward) {
+            claimBtn.disabled = true;
+            claimBtn.innerHTML = '<span>Claimed ✅</span>';
+          } else {
+            claimBtn.disabled = true;
+          }
+        }
+
+        const shareInp = document.getElementById('duoShareLinkInput');
+        if (shareInp) {
+          const code = q.myDuoId || 'FL-8947';
+          shareInp.value = `https://navdeep-kr.github.io/funlingo/?duo=${code}`;
+        }
+      }
+    }
+
+    /* --- SOCIAL SUB-TABS SWITCHER --- */
+    function switchSocialTab(tabKey) {
+      if (window.sounds) sounds.playPop();
+      if (typeof triggerHaptic === 'function') triggerHaptic('selection');
+
+      document.querySelectorAll('.social-tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.socialTab === tabKey);
+      });
+
+      document.querySelectorAll('.social-panel').forEach(p => p.classList.remove('active'));
+
+      if (tabKey === 'quests') {
+        const p = document.getElementById('panelSocialQuests');
+        if (p) p.classList.add('active');
+        if (window.questsEngine) questsEngine.renderQuestsUI();
+      } else if (tabKey === 'leagues') {
+        const p = document.getElementById('panelSocialLeagues');
+        if (p) p.classList.add('active');
+        if (window.leaguesEngine) leaguesEngine.render();
+      } else if (tabKey === 'duos') {
+        const p = document.getElementById('panelSocialDuos');
+        if (p) p.classList.add('active');
+        if (window.socialDuosEngine) socialDuosEngine.render();
+      }
+    }
+    window.switchSocialTab = switchSocialTab;
+
+    const leaguesEngine = new LeaguesEngine();
+    window.leaguesEngine = leaguesEngine;
+
+    const socialDuosEngine = new SocialDuosEngine();
+    window.socialDuosEngine = socialDuosEngine;
+    window.speakingDuosEngine = socialDuosEngine;
+
+    function initSocialEngines() {
+      document.querySelectorAll('.social-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchSocialTab(btn.dataset.socialTab));
+      });
+      leaguesEngine.init();
+      socialDuosEngine.init();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSocialEngines);
+    } else {
+      initSocialEngines();
+    }
 
 </script>
 
