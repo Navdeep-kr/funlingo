@@ -2447,6 +2447,143 @@
     @keyframes zippyWobbleTap {
       10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-4deg); }
       20%, 80% { transform: translate3d(2px, 0, 0) rotate(4deg); }
+
+    /* ==========================================================================
+       STEP 3: "EXPLAIN MY NUANCE" PEDAGOGICAL BREAKDOWN (DUOLINGO MAX ALTERNATIVE)
+       ========================================================================== */
+    .nuance-explainer-container {
+      margin-top: 10px;
+      width: 100%;
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .nuance-toggle-btn {
+      appearance: none;
+      background: var(--bg-surface-soft);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 6px 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--color-purple);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 0 var(--shadow-3d-base);
+      outline: none;
+    }
+
+    .nuance-toggle-btn:hover {
+      background: #F3E8FF;
+      border-color: var(--color-purple);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 0 var(--shadow-3d-base);
+    }
+
+    .nuance-toggle-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 var(--shadow-3d-base);
+    }
+
+    .nuance-toggle-btn.pulse-attention {
+      border-color: #F59E0B !important;
+      background: #FEF3C7 !important;
+      color: #B45309 !important;
+      animation: nuanceAttentionPulse 1.4s infinite alternate;
+    }
+
+    @keyframes nuanceAttentionPulse {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); transform: scale(1); }
+      100% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); transform: scale(1.03); }
+    }
+
+    .nuance-toggle-arrow {
+      font-size: 0.75rem;
+      transition: transform 0.25s ease;
+    }
+
+    .nuance-toggle-btn.expanded .nuance-toggle-arrow {
+      transform: rotate(180deg);
+    }
+
+    .nuance-drawer {
+      margin-top: 10px;
+      width: 100%;
+      background: #FAFAFD;
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      animation: nuanceSlideDown 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: left;
+    }
+
+    @keyframes nuanceSlideDown {
+      0% { opacity: 0; transform: translateY(-8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .nuance-section-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: var(--color-purple);
+    }
+
+    .nuance-body-text {
+      font-size: 0.86rem;
+      line-height: 1.45;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .nuance-comparison-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 480px) {
+      .nuance-comparison-box {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .nuance-cmp-bad {
+      background: #FEE2E2;
+      border: 1.5px solid #F87171;
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      color: #991B1B;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .nuance-cmp-good {
+      background: #DCFCE7;
+      border: 1.5px solid #4ADE80;
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      color: #166534;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
       30%, 50%, 70% { transform: translate3d(-3px, 0, 0) rotate(-6deg); }
       40%, 60% { transform: translate3d(3px, 0, 0) rotate(6deg); }
     }
@@ -22720,71 +22857,159 @@
 
 
       renderExercise() {
-
         const ex = this.currentExercise;
-
         renderZippyTo('exerciseZippyMount', 'thinking', 60);
 
-
-
         const card = document.getElementById('exerciseBodyCard');
-
         card.innerHTML = '';
 
-
-
         document.getElementById('exercisePromptBadge').textContent = this.getTypeBadge(ex.type);
-
         document.getElementById('exerciseQuestionTitle').textContent = ex.prompt;
 
-
-
         switch (ex.type) {
-
           case 'listen_and_tap':
-
             this.renderListenAndTap(card, ex);
-
             break;
-
           case 'translate_to_english':
-
             this.renderTranslate(card, ex);
-
             break;
-
           case 'fill_the_gap':
-
             this.renderFillTheGap(card, ex);
-
             break;
-
           case 'match_pairs':
-
             this.renderMatchPairs(card, ex);
-
             break;
-
           case 'pick_the_natural_one':
-
             this.renderPickNatural(card, ex);
-
             break;
-
           case 'speak_the_sentence':
-
             this.renderSpeakSentence(card, ex);
-
             break;
-
           case 'say_it_like_a_pro':
-
             this.renderSayItLikeAPro(card, ex);
-
             break;
-
         }
 
+        // STEP 3: "Explain My Nuance" Pedagogical Explainer
+        this.renderNuanceExplainer(card, ex);
+      }
+
+      renderNuanceExplainer(card, ex) {
+        const container = document.createElement('div');
+        container.className = 'nuance-explainer-container';
+        container.id = 'nuanceExplainerContainer';
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.className = 'nuance-toggle-btn';
+        toggleBtn.id = 'nuanceToggleBtn';
+        toggleBtn.innerHTML = `
+          <span>💡</span>
+          <span>Explain Nuance & Context</span>
+          <span class="nuance-toggle-arrow">▾</span>
+        `;
+
+        const drawer = document.createElement('div');
+        drawer.className = 'nuance-drawer';
+        drawer.id = 'nuanceDrawer';
+        drawer.style.display = 'none';
+
+        const nuance = this.getNuanceContent(ex);
+
+        drawer.innerHTML = `
+          <div class="nuance-section-header">
+            <span>🎯</span>
+            <span>Why Native Speakers Say This</span>
+          </div>
+          <div class="nuance-body-text">${nuance.why}</div>
+
+          ${nuance.vernacular ? `
+            <div class="nuance-section-header" style="margin-top: 4px;">
+              <span>🌐</span>
+              <span>Thinking in English (Vernacular Bridge)</span>
+            </div>
+            <div class="nuance-body-text">${nuance.vernacular}</div>
+          ` : ''}
+
+          <div class="nuance-comparison-box">
+            <div class="nuance-cmp-bad">
+              <div style="font-size: 0.72rem; opacity: 0.85; margin-bottom: 2px;">❌ Stiff / Literal Translation</div>
+              <div>"${nuance.avoid}"</div>
+            </div>
+            <div class="nuance-cmp-good">
+              <div style="font-size: 0.72rem; opacity: 0.85; margin-bottom: 2px;">✅ Natural & Modern (Use This!)</div>
+              <div>"${nuance.prefer}"</div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
+            <button type="button" class="btn-3d btn-ghost btn-pill" id="nuanceAudioModelBtn" style="font-size: 0.74rem; padding: 4px 10px; width: auto;">
+              🔊 Hear Model Cadence (0.75x)
+            </button>
+          </div>
+        `;
+
+        const audioBtn = drawer.querySelector('#nuanceAudioModelBtn');
+        if (audioBtn) {
+          audioBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sounds.playPop();
+            const phraseToSpeak = ex.sentence || ex.audioText || nuance.prefer;
+            playTTS(phraseToSpeak, 0.75);
+          });
+        }
+
+        toggleBtn.addEventListener('click', () => {
+          sounds.playPop();
+          const isClosed = drawer.style.display === 'none';
+          drawer.style.display = isClosed ? 'flex' : 'none';
+          toggleBtn.classList.toggle('expanded', isClosed);
+          toggleBtn.classList.remove('pulse-attention');
+        });
+
+        container.appendChild(toggleBtn);
+        container.appendChild(drawer);
+        card.appendChild(container);
+      }
+
+      getNuanceContent(ex) {
+        const textTarget = ex.sentence || ex.audioText || (ex.targetWords ? ex.targetWords.join(' ') : 'Natural English');
+        const tipText = ex.tip || "Modern conversational English values friendly warmth, relaxed rhythm, and natural contractions.";
+
+        let avoidExample = "Respected sir, how do you do today?";
+        let preferExample = textTarget;
+
+        if (ex.type === 'pick_the_natural_one' && ex.options) {
+          const badOpt = ex.options.find(o => !o.isNatural);
+          const goodOpt = ex.options.find(o => o.isNatural);
+          if (badOpt) avoidExample = badOpt.text;
+          if (goodOpt) preferExample = goodOpt.text;
+        } else if (ex.type === 'fill_the_gap' && ex.options && ex.correctWord) {
+          const wrongWord = ex.options.find(o => o !== ex.correctWord) || 'doing';
+          avoidExample = `${ex.beforeText || ''} ${wrongWord} ${ex.afterText || ''}`.trim();
+          preferExample = `${ex.beforeText || ''} ${ex.correctWord} ${ex.afterText || ''}`.trim();
+        } else if (textTarget.toLowerCase().includes("how's")) {
+          avoidExample = "How is your morning going on?";
+          preferExample = textTarget;
+        } else if (textTarget.toLowerCase().includes("i'm")) {
+          avoidExample = "I myself am...";
+          preferExample = textTarget;
+        } else if (textTarget.toLowerCase().includes("nice to meet")) {
+          avoidExample = "Very glad on meeting you.";
+          preferExample = textTarget;
+        }
+
+        let vernacularBridge = null;
+        if (ex.hindiHint) {
+          vernacularBridge = `In Hindi/regional languages, words are often translated word-for-word (${ex.hindiHint}), but English uses idiomatic rhythm and links sounds smoothly together.`;
+        }
+
+        return {
+          why: tipText,
+          vernacular: vernacularBridge,
+          avoid: avoidExample,
+          prefer: preferExample
+        };
       }
 
 
