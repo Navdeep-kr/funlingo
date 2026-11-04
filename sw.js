@@ -1,11 +1,15 @@
-// FunLingo Network-First PWA Service Worker v11
-const CACHE_NAME = 'funlingo-pwa-v11';
+// FunLingo Network-First PWA Service Worker v12
+const CACHE_NAME = 'funlingo-pwa-v12';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
+  './icon-192.png',
+  './icon-512.png',
   './icon-192.svg',
-  './icon-512.svg'
+  './icon-512.svg',
+  './screenshot-1.png',
+  './screenshot-2.png'
 ];
 
 self.addEventListener('install', (evt) => {

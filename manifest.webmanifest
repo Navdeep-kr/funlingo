@@ -1,4 +1,5 @@
 {
+  "id": "com.funlingo.app",
   "name": "FunLingo - Spoken English Mastery",
   "short_name": "FunLingo",
   "description": "Master spoken English confidence with real-time pronunciation karaoke, living mascot Zippy, interactive branching stories, and cooperative speaking duos.",
@@ -9,7 +10,32 @@
   "background_color": "#0F172A",
   "theme_color": "#845EC2",
   "categories": ["education", "social", "productivity"],
+  "prefer_related_applications": false,
   "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "icon-192.svg",
       "sizes": "192x192",
@@ -23,34 +49,50 @@
       "purpose": "any maskable"
     }
   ],
+  "screenshots": [
+    {
+      "src": "screenshot-1.png",
+      "sizes": "412x915",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Live 30-Player Weekly Spoken Leagues with Promotion Zones"
+    },
+    {
+      "src": "screenshot-2.png",
+      "sizes": "412x915",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Cooperative Speaking Duos & Shared Friend Streak"
+    }
+  ],
   "shortcuts": [
     {
       "name": "Daily Spoken Practice",
       "short_name": "Speak",
       "description": "Practice spoken English with real-time karaoke phoneme feedback",
       "url": "./?action=speak",
-      "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }]
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Coffee Break Stories",
       "short_name": "Talk",
       "description": "Interactive branching spoken role-play dialogues",
       "url": "./?action=talk",
-      "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }]
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Weekly Leagues",
       "short_name": "Leagues",
       "description": "30-player weekly spoken leaderboard",
       "url": "./?action=leagues",
-      "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }]
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Speaking Duos",
       "short_name": "Duos",
       "description": "Cooperative partner practice and shared duo streak",
       "url": "./?action=duos",
-      "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }]
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }
